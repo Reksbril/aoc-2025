@@ -1,0 +1,24 @@
+from base import Solution
+
+
+class SolutionImpl(Solution):
+    def parse(self, file_data):
+        pass
+
+
+def solution_1(data):
+    return 0
+
+
+def solution_2(data):
+    return 0
+
+
+solution_idx =
+full_input = f"full_{solution_idx}"
+short_input = f"short_{solution_idx}"
+short_result_1 =
+short_result_2 =
+
+SolutionImpl(full_input, short_input, short_result_1).run(solution_1)
+SolutionImpl(full_input, short_input, short_result_2).run(solution_2)
