@@ -4,9 +4,7 @@ from base import Solution
 class SolutionImpl(Solution):
     def parse(self, file_data):
         intervals = file_data[0].split(",")
-        split_intervals = [
-            interval.split("-") for interval in intervals
-        ]
+        split_intervals = [interval.split("-") for interval in intervals]
         return [(int(interval[0]), int(interval[1])) for interval in split_intervals]
 
 
@@ -54,16 +52,17 @@ def sum_of_invalid_numbers_in_interval(start: int, stop: int):
         start_small *= 100
         stop_small = stop_small * 100 + 99
         divisor = (divisor - 1) * 10 + 1
-       
+
     return result
 
 
 def solution_1(data):
     result = 0
-    for (start, stop) in data:
+    for start, stop in data:
         result += sum_of_invalid_numbers_in_interval(start, stop)
 
     return result
+
 
 def number_decomposition(number):
     result = []
@@ -79,20 +78,23 @@ def number_decomposition(number):
     return result
 
 
+# very dumb but at least works
 def divisors_of_number(number):
-    i = 2
-    while i <= number:
-        if number % i == 0:
-            decomposition = number_decomposition(i)
-            if any([decomposition[j] == decomposition[j+1] for j in range(len(decomposition) - 2)]):
-                i += 1
-                continue
-            if len(decomposition) % 2 == 0:
-                sign = -1
-            else:
-                sign = 1
-            yield (sign, i)
-        i += 1
+    if number == 2 or number == 4 or number == 8:
+        return [(1, 2)]
+    if number == 3:
+        return [(1, 3)]
+    if number == 5:
+        return [(1, 5)]
+    if number == 6:
+        return [(1, 2), (1, 3), (-1, 6)]
+    if number == 7:
+        return [(1, 7)]
+    if number == 9:
+        return [(1, 3)]
+    if number == 10:
+        return [(1, 2), (1, 5), (-1, 10)]
+
 
 def construct_divisor(num_of_ones, num_of_digits):
     num_digits_per_one = num_of_digits // num_of_ones
@@ -103,6 +105,7 @@ def construct_divisor(num_of_ones, num_of_digits):
         result += 1
 
     return result
+
 
 def sum_of_invalid_numbers_v2_in_interval(start, stop):
     result = 0
@@ -119,8 +122,10 @@ def sum_of_invalid_numbers_v2_in_interval(start, stop):
             num_digits += 1
             continue
 
+        print(divisors_of_number(num_digits))
         for sign, i in divisors_of_number(num_digits):
-            divisor = construct_divisor(i, num_digits) 
+            print(i)
+            divisor = construct_divisor(i, num_digits)
             result += sign * sum_of_divisible_numbers(overlap[0], overlap[1], divisor)
 
         start_small *= 10
@@ -129,9 +134,10 @@ def sum_of_invalid_numbers_v2_in_interval(start, stop):
 
     return result
 
+
 def solution_2(data):
     result = 0
-    for (start, stop) in data:
+    for start, stop in data:
         result += sum_of_invalid_numbers_v2_in_interval(start, stop)
 
     return result
