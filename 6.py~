@@ -1,0 +1,102 @@
+from base import Solution
+
+import math
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class Problem:
+    operation: str
+    numbers: List[int]
+
+    def __init__(self):
+        self.operation = ""
+        self.numbers = []
+
+class SolutionImpl(Solution):
+    def parse(self, file_data):
+        problems = [Problem() for _ in range(len(file_data[0].strip().split(" ")))]
+        for line in file_data:
+            numbers_line = line.strip().split()
+            if numbers_line[0] == "+" or numbers_line[0] == "*":
+                for idx, sign in enumerate(numbers_line):
+                    problems[idx].operation = sign
+            else:
+                for idx, number in enumerate(numbers_line):
+                    problems[idx].numbers.append(int(number))
+        return problems, file_data
+
+
+
+
+def solution_1(data):
+    result = 0
+    for problem in data[0]:
+        if len(problem.numbers) == 0:
+            continue
+        if problem.operation == "+":
+            result += sum(problem.numbers)
+        else:
+            result += math.prod(problem.numbers)
+
+    return result
+
+
+def solution_2(data):
+    # get raw data
+    data = [line.rstrip() for line in data[1]]
+
+    max_width = max([len(line) for line in data])
+    result = 0
+    current_numbers = []
+
+    data = [list(line) for line in data]
+    print(data)
+    for j in range(max_width - 1, -1, -1):
+        number = ""
+        for i in range(len(data)):
+            if j >= len(data[i]):
+                if i < len(data) - 1:
+                    number += "0"
+                continue
+
+            if data[i][j] == "+":
+                number = number.strip().replace(" ", "0")
+                if int(number) != 0:    
+                    current_numbers.append(int(number))
+                print(current_numbers)
+                result += sum(current_numbers)
+                current_numbers = []
+                number = ""
+                break
+
+            if data[i][j] == "*":
+                number = number.strip().replace(" ", "0")
+                if int(number) != 0:
+                    current_numbers.append(int(number))
+                print(current_numbers)
+                result += math.prod(current_numbers)
+                current_numbers = []
+                number = ""
+                break
+
+            number += data[i][j]
+
+
+        number = number.strip().replace(" ", "0")
+        if number != "" and int(number) != 0:
+            current_numbers.append(int(number))
+
+    return result
+
+
+
+
+solution_idx = 6
+full_input = f"full_{solution_idx}"
+short_input = f"short_{solution_idx}"
+short_result_1 = 4277556
+short_result_2 = 3263827
+
+SolutionImpl(full_input, short_input, short_result_1).run(solution_1)
+SolutionImpl(full_input, short_input, short_result_2).run(solution_2)
