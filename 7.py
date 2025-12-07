@@ -1,0 +1,44 @@
+from base import Solution
+
+
+class SolutionImpl(Solution):
+    def parse(self, file_data):
+        start_idx = None
+        grid = []
+        for line in file_data:
+            if start_idx is None:
+                for j in range(len(line)):
+                    if line[j] == "S":
+                        start_idx = (0, j)
+                        break
+
+
+            grid.append(list(line.strip()))
+
+        return start_idx, grid
+
+
+def solution_1(data):
+    start_idx, grid = data
+    current_beams = [start_idx[1]]
+
+    for i, line in enumerate(grid[1:]):
+        next_beams
+        j = 0
+
+
+
+
+
+def solution_2(data):
+    return 0
+
+
+solution_idx = 7
+full_input = f"full_{solution_idx}"
+short_input = f"short_{solution_idx}"
+short_result_1 = 21
+short_result_2 = -1
+
+SolutionImpl(full_input, short_input, short_result_1).run(solution_1)
+SolutionImpl(full_input, short_input, short_result_2).run(solution_2)
