@@ -21,10 +21,25 @@ class SolutionImpl(Solution):
 def solution_1(data):
     start_idx, grid = data
     current_beams = [start_idx[1]]
+    n_splits = 0
 
     for i, line in enumerate(grid[1:]):
-        next_beams
-        j = 0
+        next_beams = []
+
+        for beam in current_beams:
+            if line[beam] == "^":
+                n_splits += 1
+                if beam - 1 >= 0:
+                    next_beams.append(beam - 1)
+                if beam + 1 < len(line):
+                    next_beams.append(beam + 1)
+            else:
+                next_beams.append(beam)
+
+
+        current_beams = list(set(next_beams))
+
+    return n_splits
 
 
 
